@@ -10,7 +10,9 @@ import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
 import { errorHandler } from './middlewares/error-handler'
 import { NotFoundError } from './errors/not-found-error';
+
 const app = express();
+
 // since traffic if coming from nginx proxy
 app.set('trust proxy', true);
 app.use(json());
@@ -33,6 +35,10 @@ app.all('*', async (req, res) => {
 app.use(errorHandler);
 
 const start = async () => {
+  if (!process.env.JWT_KEY) {
+    throw new Error('JWT_KEY must be defined');
+  }
+
   try {
     await mongoose.connect('mongodb://auth-mongo-srv:27017/auth',{
       useNewUrlParser: true,
