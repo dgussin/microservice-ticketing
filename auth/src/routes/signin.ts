@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
+import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
 import { Password } from "../services/password";
@@ -25,7 +25,7 @@ router.post(
     const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      throw new BadRequestError("Invalid credentials");
+      throw new BadRequestError("Invalid credentials 1");
     }
 
     const passwordsMatch = await Password.compare(
@@ -34,7 +34,7 @@ router.post(
     );
 
     if (!passwordsMatch) {
-      throw new BadRequestError("Invalid credentials");
+      throw new BadRequestError("Invalid credentials 2");
     }
 
     // generate JWT
@@ -45,6 +45,7 @@ router.post(
       },
       process.env.JWT_KEY!
     );
+
     // store it on the session object
     req.session = {
       jwt: userJwt,
