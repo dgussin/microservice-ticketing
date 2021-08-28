@@ -10,12 +10,16 @@ const LandingPage = ({ currentUser }) => {
 };
 
 LandingPage.getInitialProps = async ({ req }) => {
-  if(typeof window === 'undefined') {
+  if (typeof window === 'undefined') {
     // are on the server
     // requests should be made to http://ingress-nginx.ingress-nginx.srv.xxxxxx
     const { data } = await axios.get(
       'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser',
       {
+        // send cookies along with all headers
+        // along with the 'host: "ticketing.dev'
+        // get sent to nginx to route the quest 
+        // to the correct service
         headers: req.headers
       }
     );
