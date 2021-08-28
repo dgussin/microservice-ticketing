@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 
 
-const main = ({ Component, pageProps }) => {
+const AppComponent = ({ Component, pageProps }) => {
   return (
     <div>
       <h1>Header!</h1>
@@ -11,4 +11,4 @@ const main = ({ Component, pageProps }) => {
   );
 };
 
-export default main;
+export default AppComponent;
